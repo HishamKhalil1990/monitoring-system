@@ -268,6 +268,11 @@ const Home: NextPage = () => {
         branchDev: 'داخلي',
         branchIP: '192.168.98.100',
       },
+      {
+        branchName: 'هشام',
+        branchDev: 'داخلي',
+        branchIP: '192.168.90.187',
+      }
     ]
     const obj: Array<any> = []
     const length: any = testBranchOBJS.length
