@@ -275,9 +275,9 @@ const Home: NextPage = () => {
       }
     ]
     const obj: Array<any> = []
-    const length: any = testBranchOBJS.length
+    const length: any = branchesObj.length
     new Promise((resolve: any, reject: any) => {
-      testBranchOBJS.forEach((branch: any) => {
+      branchesObj.forEach((branch: any) => {
         syncData(branch, obj, resolve, length)
       })
     }).then(() => {
