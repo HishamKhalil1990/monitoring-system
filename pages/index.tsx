@@ -133,31 +133,31 @@ const Home: NextPage = () => {
     }
   },[showBranchsSync])
 
-  // useEffect(() => {
-  //   if(branchsSync.length > 0){
-  //     let msg : string = ""
-  //     branchsSync.forEach((branch : any) => {
-  //       if(branch.status == 'لم يتم التحديث'){
-  //         msg += `${branch.branchName}  `
-  //       }
-  //     })
-  //     sendMessage(msg)
-  //   }
-  // },[branchsSync])
+  useEffect(() => {
+    if(branchsSync.length > 0){
+      let msg : string = ""
+      branchsSync.forEach((branch : any) => {
+        if(branch.status == 'لم يتم التحديث'){
+          msg += `${branch.branchName},  `
+        }
+      })
+      sendMessage(msg)
+    }
+  },[branchsSync])
 
-  // const sendMessage : any = (msg : string) => {
-  //   axios({
-  //     url: '/api/email',
-  //     method: 'POST',
-  //     headers: {
-  //       'Accept': 'application/json, text/plain, */*',
-  //       'Content-Type': 'application/json'
-  //     },
-  //     data: JSON.stringify(msg)
-  //   }).then((res) => {
-  //     // alert(res.data)
-  //   })
-  // }
+  const sendMessage : any = (msg : string) => {
+    axios({
+      url: '/api/email',
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      data: JSON.stringify(msg)
+    }).then((res) => {
+      // alert(res.data)
+    })
+  }
 
   const renderConnStatus: any = (type: string) => {
     let disconnected
