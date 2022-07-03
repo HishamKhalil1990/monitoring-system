@@ -138,7 +138,7 @@ const Home: NextPage = () => {
       let msg : string = ""
       branchsSync.forEach((branch : any) => {
         if(branch.status == 'لم يتم التحديث'){
-          msg += `${branch.branchName},  `
+          msg += `${branch.branchName},    `
         }
       })
       sendMessage(msg)
