@@ -5,10 +5,9 @@ export default function(req,res){
     const nodemailer = require('nodemailer')
     // declared variables
     const host = "mail.abuodehbros.com" // email provider 
-    const emails = ["m.sawalha@abuodehbros.com","r.wathaify@elrayhanjo.com","Z.nawafleh@elrayhanjo.com","m.abuizhery@abuodehbros.com","H.Ibraheem@abuodehbros.com"]
     const fromEmail = "alerts@abuodehbros.com" // email sender user
     const fromEmailPass = "Aa@123456" // email sender password
-    const sendEmail = (text,subject,email) => {
+    const sendEmail = (text,subject) => {
         const transporter = nodemailer.createTransport({
             host: host,
             port: 587,
@@ -25,16 +24,15 @@ export default function(req,res){
         });
         const emailOptions = {
             from : fromEmail,
-            to : email,
+            to : "r.wathaify@elrayhanjo.com,Z.nawafleh@elrayhanjo.com",
             subject : subject,
+            cc : "m.abuizhery@abuodehbros.com,m.sawalha@abuodehbros.com",
             text : text,
         }
         transporter.sendMail(emailOptions,(error,info) => {
             if (error) throw error;
         })
     }
-    emails.forEach(email => {
-        sendEmail(text,subject,email)
-    })
+    sendEmail(text,subject)
     res.send('done')
 }
