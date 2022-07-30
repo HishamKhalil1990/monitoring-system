@@ -24,13 +24,14 @@ export default function(req,res){
         });
         const emailOptions = {
             from : fromEmail,
-            to : "r.wathaify@elrayhanjo.com,Z.nawafleh@elrayhanjo.com",
+            to : "r.wathaify@elrayhanjo.com;Z.nawafleh@elrayhanjo.com;H.Ibraheem@abuodehbros.com",
             subject : subject,
-            cc : "m.abuizhery@abuodehbros.com,m.sawalha@abuodehbros.com",
+            cc : "m.abuizhery@abuodehbros.com;m.sawalha@abuodehbros.com",
             text : text,
         }
         transporter.sendMail(emailOptions,(error,info) => {
             if (error) throw error;
+            // console.log(info)
         })
     }
     sendEmail(text,subject)
