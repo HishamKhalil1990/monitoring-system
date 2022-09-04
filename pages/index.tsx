@@ -38,24 +38,57 @@ const Home: NextPage = () => {
   ) => {
     const branchDetails = new BranchDetails(branch.branchName)
     return new Promise((resolve: any, reject: any) => {
-      axios
-        .get(`http://${branch.branchIP}:9999`, { timeout: 5000 })
-        .then((res: any) => {
-          if (res.status === 200) {
-            connList.push(branchDetails)
-            isDone.push('added')
-            resolve(true)
-          } else {
+      if(branch.branchDev == "inner"){
+        axios
+          .get(`http://${branch.branchIP}:9999`, { timeout: 5000 })
+          .then((res: any) => {
+            if (res.status === 200) {
+              connList.push(branchDetails)
+              isDone.push('added')
+              resolve(true)
+            } else {
+              disConnList.push(branchDetails)
+              isDone.push('added')
+              resolve(true)
+            }
+          })
+          .catch((err: Error) => {
             disConnList.push(branchDetails)
             isDone.push('added')
+            resolve(err)
+          })
+      }else{
+        axios({
+          url: 'http://localhost:3001/checkIP',
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+          },
+          data: JSON.stringify(branch),
+          timeout: 10000 
+        }).then((res: any) => {
+            console.log(res.data)
+            isDone.push('added')
+            alert(branch.branchName + " " + res.data.status)
             resolve(true)
-          }
-        })
-        .catch((err: Error) => {
-          disConnList.push(branchDetails)
-          isDone.push('added')
-          resolve(err)
-        })
+            // if (res.status === 200) {
+            //   connList.push(branchDetails)
+            //   isDone.push('added')
+            //   resolve(true)
+            // } else {
+            //   disConnList.push(branchDetails)
+            //   isDone.push('added')
+            //   resolve(true)
+            // }
+          })
+          .catch((err: Error) => {
+            // disConnList.push(branchDetails)
+            // isDone.push('added')
+            isDone.push('added')
+            resolve(err)
+          })
+      }
     })
   }
 
