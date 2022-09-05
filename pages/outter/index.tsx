@@ -2,7 +2,13 @@ import type { NextPage } from 'next'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const branchesObj: any = require('../branches.json')
+const branchesObjAll: any = require('../../branches.json')
+const branchesObj: any = []
+branchesObjAll.forEach((branch:any) => {
+  if(branch.branchDev == "outter"){
+    branchesObj.push(branch)
+  }
+})
 class BranchDetails {
   branchName: string
   constructor(branchName: string) {
@@ -15,10 +21,7 @@ const Home: NextPage = () => {
   const [disconneDataInner, setDisConneDataInner] = useState(Array)
   const [conneDataOutter, setConneDataOutter] = useState(Array)
   const [disconneDataOutter, setDisConneDataOutter] = useState(Array)
-  const [connBtuInner, setConnBtuInner] = useState(false)
-  const [disConnBtuInner, setDisConnBtuInner] = useState(false)
-  const [connBtuOutter, setConnBtuOutter] = useState(false)
-  const [disConnBtuOutter, setDisConnBtuOutter] = useState(false)
+  const [page,setPage] = useState("outter")
   const [fetched, setFetched] = useState(false)
   const [repeatFetching, setRepeatFetching] = useState(false)
   const [showConn, setShowConn] = useState(true)
@@ -68,23 +71,19 @@ const Home: NextPage = () => {
           data: JSON.stringify(branch),
           timeout: 10000 
         }).then((res: any) => {
-            console.log(res.data)
-            isDone.push('added')
-            alert(branch.branchName + " " + res.data.status)
-            resolve(true)
-            // if (res.status === 200) {
-            //   connList.push(branchDetails)
-            //   isDone.push('added')
-            //   resolve(true)
-            // } else {
-            //   disConnList.push(branchDetails)
-            //   isDone.push('added')
-            //   resolve(true)
-            // }
+            if (res.data.status === 'online') {
+              connList.push(branchDetails)
+              isDone.push('added')
+              resolve(true)
+            } else {
+              disConnList.push(branchDetails)
+              isDone.push('added')
+              resolve(true)
+            }
           })
           .catch((err: Error) => {
-            // disConnList.push(branchDetails)
-            // isDone.push('added')
+            console.log(branchDetails)
+            disConnList.push(branchDetails)
             isDone.push('added')
             resolve(err)
           })
@@ -203,7 +202,7 @@ const Home: NextPage = () => {
       connected = conneDataOutter
     }
     return (
-      <div className="flex w-full flex-wrap content-start justify-start rounded-2xl border-2 border-pink-800 p-8">
+      <div className="flex flex-wrap content-start justify-start rounded-2xl border-2 border-pink-800 p-8">
         <>
           {showDisConne ? (
             disconnected.map((item: any) => (
@@ -234,79 +233,7 @@ const Home: NextPage = () => {
     )
   }
 
-  const renderDetails: any = (type: string) => {
-    let data
-    switch (type) {
-      case 'inner-conne':
-        data = conneDataInner
-        break
-      case 'inner-disconne':
-        data = disconneDataInner
-        break
-      case 'outter-conne':
-        data = conneDataOutter
-        break
-      case 'outter-disconne':
-        data = disconneDataOutter
-        break
-      default:
-        break
-    }
-    return (
-      <ul className="mt-2 flex w-1/2 flex-col items-end border-2 border-pink-800">
-        {data?.map((item: any, index: number) => (
-          <>
-            {index == 0 ? (
-              <li className="w-full border-pink-800 hover:bg-pink-800">
-                <p className="mr-2 pt-4 pb-4 text-right text-pink-800 hover:text-white">
-                  {item.branchName}
-                </p>
-              </li>
-            ) : (
-              <li className="w-full border-t-2 border-pink-800 hover:bg-pink-800">
-                <p className="mr-2 pt-4 pb-4 text-right text-pink-800 hover:text-white">
-                  {item.branchName}
-                </p>
-              </li>
-            )}
-          </>
-        ))}
-      </ul>
-    )
-  }
-
   const syncAll: any = async () => {
-    const testBranchOBJS: Array<{
-      branchName: string
-      branchDev: string
-      branchIP: string
-    }> = [
-      {
-        branchName: 'سامح عريفة مول',
-        branchDev: 'داخلي',
-        branchIP: '192.168.12.100',
-      },
-      {
-        branchName: 'سامح وحدات',
-        branchDev: 'داخلي',
-        branchIP: '192.168.10.100',
-      },
-      {
-        branchName: 'سامح ماركا',
-        branchDev: 'داخلي',
-        branchIP: '192.168.15.100',
-      },
-      {
-        branchName: 'سامح السابع',
-        branchDev: 'داخلي',
-        branchIP: '192.168.98.100',
-      },
-      {
-        branchName: 'هشام',
-        branchDev: 'داخلي',
-        branchIP: '192.168.90.187',
-      }
-    ]
     const obj: Array<any> = []
     const length: any = branchesObj.length
     new Promise((resolve: any, reject: any) => {
@@ -334,7 +261,6 @@ const Home: NextPage = () => {
           timeout: 5000,
         })
         .then((res: any) => {
-          // console.log(res.data.msg)
           objArray.push({
             branchName: branch.branchName,
             branchIP: branch.branchIP,
@@ -395,13 +321,8 @@ const Home: NextPage = () => {
                 setShowDisConne(false)
               }}
             >
-              {conneDataInner.length} متصل
+              {page == 'inner'? conneDataInner.length : conneDataOutter.length} متصل
             </button>
-            {/* {connBtuInner && conneDataInner.length > 0 ? (
-              renderDetails('inner-conne')
-            ) : (
-              <></>
-            )} */}
             <button
               className="mt-4 h-11 w-32 rounded-md bg-pink-800 text-white"
               onClick={() => {
@@ -409,13 +330,8 @@ const Home: NextPage = () => {
                 setShowDisConne(true)
               }}
             >
-              {disconneDataInner.length} غير متصل
+              {page == 'inner'? disconneDataInner.length : disconneDataOutter.length} غير متصل
             </button>
-            {/* {disConnBtuInner && disconneDataInner.length > 0 ? (
-              renderDetails('inner-disconne')
-            ) : (
-              <></>
-            )} */}
             <button
               className="mt-4 h-11 w-32 rounded-md bg-pink-800 text-white"
               onClick={() => {
@@ -423,41 +339,13 @@ const Home: NextPage = () => {
                 setShowDisConne(true)
               }}
             >
-              {disconneDataInner.length + conneDataInner.length} الجميع
+              {page == 'inner'? disconneDataInner.length + conneDataInner.length : disconneDataOutter.length + conneDataOutter.length} الجميع
             </button>
           </div>
           <div className="relative h-0 w-full text-3xl text-pink-800">
-            <div className="absolute inset-x-1/2 top-3">داخلي</div>
+            <div className="absolute inset-x-1/2 top-3">{page == 'inner'? 'داخلي' : 'خارجي'}</div>
           </div>
-          {renderConnStatus('inner')}
-          {/* <div className="relative h-0 w-full text-3xl text-pink-800">
-            <div className="absolute inset-x-1/2 top-3">خارجي</div>
-          </div>
-          {renderConnStatus('outter')}
-          <div className="mb-4 flex flex-col items-end justify-around">
-            <button
-              className="mt-4 h-11 w-32 rounded-md bg-pink-800 text-white"
-              onClick={() => setConnBtuOutter(!connBtuOutter)}
-            >
-              {conneDataOutter.length} متصل
-            </button>
-            {connBtuOutter && conneDataOutter.length > 0 ? (
-              renderDetails('outter-conne')
-            ) : (
-              <></>
-            )}
-            <button
-              className="mt-4 h-11 w-32 rounded-md bg-pink-800 text-white"
-              onClick={() => setDisConnBtuOutter(!disConnBtuOutter)}
-            >
-              {disconneDataOutter.length} غير متصل
-            </button>
-            {disConnBtuOutter && disconneDataOutter.length > 0 ? (
-              renderDetails('outter-disconne')
-            ) : (
-              <></>
-            )}
-          </div> */}
+          {page == 'inner'? renderConnStatus('inner') : renderConnStatus('outter')}
         </div>
       </div>
     )
@@ -490,9 +378,6 @@ const Home: NextPage = () => {
               <li className="flex justify-start">
                 <a href="#">add notification</a>
               </li>
-              {/* <li className="flex justify-start">
-                <a href="#">send to sap</a>
-              </li> */}
             </ul>
             {showBranchsSync?
               <>
