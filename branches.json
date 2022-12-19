@@ -1,8 +1,153 @@
 [
   {
+    "branchName": "كريم - الرابية",
+    "branchDev": "inner",
+    "branchIP": "192.168.116.100"
+  },
+  {
     "branchName": "سامح مول - الرمثا",
     "branchDev": "inner",
     "branchIP": "192.168.105.100"
+  },
+  {
+    "branchName": "كريم - اربد 2",
+    "branchDev": "inner",
+    "branchIP": "192.168.125.100"
+  },
+  {
+    "branchName": "كريم - طبربور 2",
+    "branchDev": "inner",
+    "branchIP": "192.168.124.100"
+  },
+  {
+    "branchName": "كريم - السلط",
+    "branchDev": "inner",
+    "branchIP": "192.168.122.100"
+  },
+  {
+    "branchName": "كريم - سحاب",
+    "branchDev": "inner",
+    "branchIP": "192.168.119.100"
+  },
+  {
+    "branchName": "كريم - نزال",
+    "branchDev": "inner",
+    "branchIP": "192.168.118.100"
+  },
+  {
+    "branchName": "كريم - ماركا",
+    "branchDev": "inner",
+    "branchIP": "192.168.121.100"
+  },
+  {
+    "branchName": "كريم - حرية",
+    "branchDev": "inner",
+    "branchIP": "192.168.128.100"
+  },
+  {
+    "branchName": "كريم - هاشمي 2",
+    "branchDev": "inner",
+    "branchIP": "192.168.120.100"
+  },
+  {
+    "branchName": "كريم - عين الباشا",
+    "branchDev": "inner",
+    "branchIP": "192.168.115.100"
+  },
+  {
+    "branchName": "كريم - جبل الشمالي",
+    "branchDev": "inner",
+    "branchIP": "192.168.114.100"
+  },
+  {
+    "branchName": "كريم - عوجان",
+    "branchDev": "inner",
+    "branchIP": "192.168.113.100"
+  },
+  {
+    "branchName": "كريم - جرش",
+    "branchDev": "inner",
+    "branchIP": "192.168.126.100"
+  },
+  {
+    "branchName": "كريم - جمرك",
+    "branchDev": "inner",
+    "branchIP": "192.168.108.100"
+  },
+  {
+    "branchName": "كريم - مادبا",
+    "branchDev": "inner",
+    "branchIP": "192.168.107.100"
+  },
+  {
+    "branchName": "كريم - تلاع العلي 1",
+    "branchDev": "inner",
+    "branchIP": "192.168.117.100"
+  },
+  {
+    "branchName": "كريم - نصر 1",
+    "branchDev": "inner",
+    "branchIP": "192.168.88.100"
+  },
+  {
+    "branchName": "كريم - استقلال",
+    "branchDev": "inner",
+    "branchIP": "192.168.110.100"
+  },
+  {
+    "branchName": "كريم - طبربور 1",
+    "branchDev": "inner",
+    "branchIP": "192.168.104.100"
+  },
+  {
+    "branchName": "كريم - تلاع العلي 2",
+    "branchDev": "inner",
+    "branchIP": "192.168.102.100"
+  },
+  {
+    "branchName": "كريم - راية",
+    "branchDev": "inner",
+    "branchIP": "192.168.101.100"
+  },
+  {
+    "branchName": "كريم - خلدا",
+    "branchDev": "inner",
+    "branchIP": "192.168.96.100"
+  },
+  {
+    "branchName": "كريم - نصر 2",
+    "branchDev": "inner",
+    "branchIP": "192.168.95.100"
+  },
+  {
+    "branchName": "كريم - اربد 1",
+    "branchDev": "inner",
+    "branchIP": "192.168.93.100"
+  },
+  {
+    "branchName": "كريم - المقابلين",
+    "branchDev": "inner",
+    "branchIP": "192.168.92.100"
+  },
+  {
+    "branchName": "كريم - نصر 3",
+    "branchDev": "inner",
+    "branchIP": "192.168.88.100"
+  },
+  {
+    "branchName": "كريم - شارع الجامعة",
+    "branchDev": "inner",
+    "branchIP": "192.168.86.100"
+  },
+  {
+    "branchName": "كريم - خريبة السوق",
+    "branchDev": "inner",
+    "branchIP": "192.168.85.100"
+  },
+  {
+    "branchName": "كريم - هاشمي 1",
+    "branchDev": "inner",
+    "branchIP": "192.168.84.100"
   },
   {
     "branchName": "سامح مول - عريفة",
