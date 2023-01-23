@@ -457,7 +457,7 @@
   {
       "branchName": "معرض طبربور كاش-1",
       "branchDev": "outter",
-      "branchIP": "192.168.76.98"
+      "branchIP": "192.168.76.168"
   },
   {
       "branchName": "معرض طبربور كاش-2",
@@ -477,7 +477,7 @@
   {
       "branchName": "معرض صويلح كاش-2",
       "branchDev": "outter",
-      "branchIP": "192.168.99.100"
+      "branchIP": "192.168.99.151"
   },
   {
       "branchName": "معرض الجبيهة كاش-1",
@@ -488,5 +488,20 @@
       "branchName": "معرض الجبيهة كاش-2",
       "branchDev": "outter",
       "branchIP": "192.168.97.99"
+  },
+  {
+      "branchName": "مستودع معرض معان الخارجي",
+      "branchDev": "outter",
+      "branchIP": "192.168.132.100"
+  },
+  {
+      "branchName": "مستودع معرض شارع المدينة المنورة الخارجي",
+      "branchDev": "outter",
+      "branchIP": "192.168.134.100"
+  },
+  {
+      "branchName": "مستودع معرض المدينة الرياضية الخارجي",
+      "branchDev": "outter",
+      "branchIP": "192.168.133.100"
   }
 ]
