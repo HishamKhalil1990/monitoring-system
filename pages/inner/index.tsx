@@ -234,7 +234,8 @@ const Home: NextPage = () => {
     )
   }
 
-  const syncAll: any = async (type:string,text:string|undefined) => {
+  const syncAll: any = async (type:string,text:string|undefined,branches:Array<any>) => {
+    let branchesObj = branches
     const obj: Array<any> = []
     const length: any = branchesObj.length
     new Promise((resolve: any, reject: any) => {
@@ -301,9 +302,10 @@ const Home: NextPage = () => {
     })
   }
 
-  const sendNotification : any = (text:string) => {
+  const sendNotification : any = (text:string,branchesObj:Array<any>) => {
+    const filtredBranches:Array<any> = branchesObj.filter(branch => branch.chose == 'y')
     setShowBranchsSync(true)
-    syncAll('notification',text)
+    syncAll('notification',text,filtredBranches)
   }
 
   const renderSynced : any = () => {
@@ -395,7 +397,7 @@ const Home: NextPage = () => {
                       setBranchsSync([])
                     }
                     setShowBranchsSync(true)
-                    syncAll('sync')
+                    syncAll('sync',undefined,branchesObj)
                   }}
                 >
                   sync data
@@ -414,7 +416,7 @@ const Home: NextPage = () => {
                   >add notification
                   </a>
                 :
-                  <Notification sendNotification={sendNotification} setOpen={setOpen}/>
+                  <Notification sendNotification={sendNotification} setOpen={setOpen} branchesObj={branchesObj}/>
                 }
               </li>
             </ul>

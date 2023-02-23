@@ -3,12 +3,63 @@ import Popup from 'reactjs-popup';
 import styles from '../styles/ConfirmModal.module.css'
 import ConfirmModal from './confirmModal'
 
-export default function Notification({sendNotification,setOpen}){
+export default function Notification({sendNotification,setOpen,branchesObj}){
     const [text,setText] = useState('')
+    const [branches,setBranches] = useState(branchesObj)
+    const [type,setType] = useState('الكل')
     const textRef = useRef()
+
     useEffect(() => {
         textRef.current.focus()
     },[])
+
+    const changeCheck = (index) => {
+        const newBranches = [...branches]
+        if(newBranches[index].chose == 'y'){
+            newBranches[index]['chose'] = 'n'
+        }else{
+            newBranches[index]['chose'] = 'y'
+        }
+        setBranches(newBranches)
+    }
+
+    const changeAllCheck = () => {
+        const newBranches = [...branches]
+        branches.forEach(branch => {
+            if(type == 'الكل'){
+                branch['chose'] = 'y'
+            }else{
+                branch['chose'] = 'n'
+            }
+        })
+        if(type == 'الكل'){
+            setType('الغاء')
+        }else{
+            setType('الكل')
+        }
+        setBranches(newBranches)
+    }
+
+    const getBranches = () => {
+        return branches.map((branch, index) => {
+            return(
+                <div className={styles.branDiv}>
+                    <p>{branch.branchName}</p>
+                    <button 
+                        onClick={() => changeCheck(index)}
+                        className={branch.chose == 'y'? styles.cancelCheck : styles.check}
+                    >
+                        {branch.chose == 'y'?
+                            <p>الغاء</p>
+                        :
+                            <p>اختر</p> 
+                        }
+                        
+                    </button>
+                </div>
+            )
+        })
+    }
 
     return(
         <Popup
@@ -32,8 +83,28 @@ export default function Notification({sendNotification,setOpen}){
                         className={styles.textArea}
                     ></textarea>
                 </div>
+                {text.length > 0?
+                    <div className={styles.branchesOutterDiv}>
+                        <div className={styles.branchesInnerDiv}>
+                            <div className={styles.chose}>
+                                <button
+                                    onClick={() => changeAllCheck()} 
+                                    className={type == 'الكل'? styles.btuChose : styles.btuCancel}
+                                >
+                                    {type}
+                                </button>
+                                <p className={styles.branchesChose}>اختر الفروع</p>
+                            </div>
+                            <div className={styles.barnches}>
+                                {getBranches()}
+                            </div>
+                        </div>
+                    </div>
+                :
+                    <></>
+                }
                 <div className={styles.actions}>
-                <ConfirmModal setOpen={setOpen} closeNotfication={close} sendNotification={sendNotification} text={text} textRef={textRef}/>
+                <ConfirmModal setOpen={setOpen} closeNotfication={close} sendNotification={sendNotification} text={text} textRef={textRef} branches={branches}/>
                 <button
                     className={styles.btuClose}
                     onClick={() => {

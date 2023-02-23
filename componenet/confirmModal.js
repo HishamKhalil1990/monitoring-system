@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Popup from 'reactjs-popup';
 import styles from '../styles/ConfirmModal.module.css'
 
-export default function ConfirmModal({setOpen,sendNotification,closeNotfication,text,textRef}){
+export default function ConfirmModal({setOpen,sendNotification,closeNotfication,text,textRef,branches}){
     return(
         <Popup
             trigger={<button className={styles.btu}> Send </button>}
@@ -23,7 +23,7 @@ export default function ConfirmModal({setOpen,sendNotification,closeNotfication,
                 <div className={styles.actions}>
                 <button 
                     className={styles.btuConfirm}
-                    onClick={() => {closeNotfication();setOpen(false);close();sendNotification(text)}}
+                    onClick={() => {closeNotfication();setOpen(false);close();sendNotification(text,branches)}}
                 > 
                     Confirm 
                 </button>
