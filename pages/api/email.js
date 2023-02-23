@@ -19,7 +19,7 @@ export default function(req,res){
                 pass : fromEmailPass
             },
             tls: { 
-                minVersion: 'TLSv1', // -> This is the line that solved my problem
+                minVersion: 'TLSv1',
                 rejectUnauthorized: false,
             }
         });

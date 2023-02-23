@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import Notification from '../../componenet/notification'
 
 const branchesObjAll: any = require('../../branches.json')
 const branchesObj: any = []
@@ -28,6 +29,7 @@ const Home: NextPage = () => {
   const [showDisConne, setShowDisConne] = useState(true)
   const [branchsSync, setBranchsSync] = useState(Array)
   const [showBranchsSync, setShowBranchsSync] = useState(false)
+  const [open, setOpen] = useState(false)
 
   const branchPromise: any = (
     branch: {
@@ -166,12 +168,11 @@ const Home: NextPage = () => {
   },[showBranchsSync])
 
   useEffect(() => {
-    if(branchsSync.length > 0){
+    const filteredBranches:Array<any> = branchsSync.filter((branch:any) => branch.status == 'لم يتم التحديث')
+    if(filteredBranches.length > 0){
       let msg : string = ""
-      branchsSync.forEach((branch : any) => {
-        if(branch.status == 'لم يتم التحديث'){
-          msg += branch.branchName + "\n"
-        }
+      filteredBranches.forEach((branch : any) => {
+        msg += branch.branchName + "\n"
       })
       sendMessage(msg)
     }
@@ -233,12 +234,12 @@ const Home: NextPage = () => {
     )
   }
 
-  const syncAll: any = async () => {
+  const syncAll: any = async (type:string,text:string|undefined) => {
     const obj: Array<any> = []
     const length: any = branchesObj.length
     new Promise((resolve: any, reject: any) => {
       branchesObj.forEach((branch: any) => {
-        syncData(branch, obj, resolve, length)
+        syncData(branch, obj, resolve, length, type, text)
       })
     }).then(() => {
       setBranchsSync(obj)
@@ -253,18 +254,35 @@ const Home: NextPage = () => {
     },
     objArray: Array<any>,
     finish: any,
-    length: any
+    length: any,
+    type:string,
+    text:string|undefined
   ) => {
     new Promise((resolve: any, reject: any) => {
+      let url:string = ''
+      let data = {
+        message: text != undefined? text : 'none'
+      }
+      switch(type){
+        case 'sync':
+          url = `http://${branch.branchIP}:9999/notification/sync`
+          break;
+        case 'notification':
+          url = `http://${branch.branchIP}:9999/notification/notify`
+
+          break;
+        default:
+          break;
+      }
       axios
-        .post(`http://${branch.branchIP}:9999/notification/sync`, {
+        .post(url,data, {
           timeout: 5000,
         })
         .then((res: any) => {
           objArray.push({
             branchName: branch.branchName,
             branchIP: branch.branchIP,
-            status: 'تم التحديث',
+            status: type == 'sync'? 'تم التحديث' : 'تم الارسال',
           })
           resolve()
         })
@@ -272,7 +290,7 @@ const Home: NextPage = () => {
           objArray.push({
             branchName: branch.branchName,
             branchIP: branch.branchIP,
-            status: 'لم يتم التحديث',
+            status: type == 'sync'? 'لم يتم التحديث' : 'لم يتم الارسال',
           })
           resolve()
         })
@@ -283,13 +301,18 @@ const Home: NextPage = () => {
     })
   }
 
+  const sendNotification : any = (text:string) => {
+    setShowBranchsSync(true)
+    syncAll('notification',text)
+  }
+
   const renderSynced : any = () => {
     return(
       <ul style={{width:"100%",height:"100%"}}>
         {branchsSync.map((branch:any) => {
           return (
                   <li style={{width:"95%"}} className="flex justify-end">
-                    {branch.status == "تم التحديث" ? 
+                    {(branch.status == "تم التحديث") || (branch.status == 'تم الارسال') ? 
                       <div className="bg-green-600 text-white flex items-center justify-end w-1/2 p-4 mb-2.5">
                         <p className='w-fit'>
                           {branch.branchName} {branch.status} 
@@ -368,15 +391,31 @@ const Home: NextPage = () => {
                 <a
                   href="#"
                   onClick={() => {
+                    if(showBranchsSync){
+                      setBranchsSync([])
+                    }
                     setShowBranchsSync(true)
-                    syncAll()
+                    syncAll('sync')
                   }}
                 >
                   sync data
                 </a>
               </li>
               <li className="flex justify-start">
-                <a href="#">add notification</a>
+                {!open?
+                  <a 
+                    href="#"
+                    onClick={() => {
+                      if(showBranchsSync){
+                        setShowBranchsSync(false)
+                      }
+                      setOpen(true)
+                    }}
+                  >add notification
+                  </a>
+                :
+                  <Notification sendNotification={sendNotification} setOpen={setOpen}/>
+                }
               </li>
             </ul>
             {showBranchsSync?
