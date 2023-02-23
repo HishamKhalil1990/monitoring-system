@@ -4,10 +4,10 @@ export default function(req,res){
     // import module
     const nodemailer = require('nodemailer')
     // declared variables
-    const host = "owa1.abuodehbros.com" // email provider 
-    const email = "H.Ibraheem@abuodehbros.com"
-    const fromEmail = "alerts@abuodehbros.com" // email sender user
-    const fromEmailPass = "Aa@123456" // email sender password
+    const host = "*" // email provider 
+    const email = "*"
+    const fromEmail = "*" // email sender user
+    const fromEmailPass = "*" // email sender password
     const sendEmail = (text,subject,email) => {
         const transporter = nodemailer.createTransport({
             host: host,
