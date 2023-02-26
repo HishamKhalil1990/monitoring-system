@@ -23,7 +23,7 @@ export default function Notification({sendNotification,setOpen,branchesObj}){
         setBranches(newBranches)
     }
 
-    const changeAllCheck = () => {
+    const changeAllCheck = (type) => {
         const newBranches = [...branches]
         branches.forEach(branch => {
             if(type == 'الكل'){
@@ -88,7 +88,7 @@ export default function Notification({sendNotification,setOpen,branchesObj}){
                         <div className={styles.branchesInnerDiv}>
                             <div className={styles.chose}>
                                 <button
-                                    onClick={() => changeAllCheck()} 
+                                    onClick={() => changeAllCheck(type)} 
                                     className={type == 'الكل'? styles.btuChose : styles.btuCancel}
                                 >
                                     {type}
@@ -104,7 +104,7 @@ export default function Notification({sendNotification,setOpen,branchesObj}){
                     <></>
                 }
                 <div className={styles.actions}>
-                <ConfirmModal setOpen={setOpen} closeNotfication={close} sendNotification={sendNotification} text={text} textRef={textRef} branches={branches}/>
+                <ConfirmModal setOpen={setOpen} closeNotfication={close} sendNotification={sendNotification} text={text} textRef={textRef} branches={branches} changeAllCheck={changeAllCheck}/>
                 <button
                     className={styles.btuClose}
                     onClick={() => {
